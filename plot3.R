@@ -1,0 +1,11 @@
+hpc <- read.table(file="household_power_consumption.txt",sep =";",na.strings="?",header=TRUE)
+hpc$DateTime <- as.POSIXct(paste(hpc$Date,hpc$Time),format="%d/%m/%Y %H:%M:%S")
+hpc2 <- subset(hpc,DateTime >= as.POSIXct('2007/02/01') & DateTime < as.POSIXct('2007/02/03'))
+
+png('plot3.png')
+plot(hpc2$DateTime,hpc2$Sub_metering_1, type="n", xlab='', ylab="Energy sub metering")
+lines(hpc2$DateTime,hpc2$Sub_metering_1,col = 'black')
+lines(hpc2$DateTime,hpc2$Sub_metering_2,col = 'red')
+lines(hpc2$DateTime,hpc2$Sub_metering_3,col = 'blue')
+legend("topright",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"), lty=1)
+dev.off()
